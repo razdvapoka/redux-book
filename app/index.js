@@ -1,37 +1,27 @@
-require('./index.html')
-require('./assets/redux.png')
+import { createStore } from 'redux'
+import './index.html'
+import './assets/redux.png'
 
-let state = {
+let initialState = {
   counter: 0
-}
-const listeners = []
-
-const dispatch = (action) => {
-  const newState = reducer(state, action)
-  if (newState !== state) {
-    state = newState
-    listeners.forEach(listener => listener())
-  }
-}
-
-const subscribe = (callback) => {
-  listeners.push(callback)
 }
 
 const updateView = () => {
-  document.querySelector('.counter').innerText = state.counter
+  document.querySelector('.counter').innerText = store.getState().counter
 }
 
 const reducer = (state, action) => {
-  switch (action) {
+  switch (action.type) {
     case 'INC': return { ...state, counter: state.counter + 1 }
     case 'DEC': return { ...state, counter: state.counter - 1 }
     default: return state
   }
 }
 
-document.querySelector('.inc').onclick = () => dispatch('INC')
-document.querySelector('.dec').onclick = () => dispatch('DEC')
+const store = createStore(reducer, initialState)
+store.subscribe(updateView)
 
-subscribe(updateView)
+document.querySelector('.inc').onclick = () => store.dispatch({ type: 'INC' })
+document.querySelector('.dec').onclick = () => store.dispatch({ type: 'DEC' })
+
 updateView()

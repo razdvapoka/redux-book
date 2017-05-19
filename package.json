@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "code from https://leanpub.com/redux-book",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "redux": "^3.6.0"
+  },
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
